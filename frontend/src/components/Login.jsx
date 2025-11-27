@@ -1,10 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  // If already logged in → redirect to home
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   const login = async () => {
     const res = await fetch("http://localhost:5000/api/auth/login", {
@@ -30,7 +37,7 @@ export default function Login() {
         </h2>
 
         <div className="space-y-4">
-          
+
           <div>
             <label className="text-gray-700 font-semibold">Email</label>
             <input
@@ -61,6 +68,16 @@ export default function Login() {
           >
             Login
           </button>
+
+          <p className="text-center text-gray-600 mt-3">
+            Don’t have an account?{" "}
+            <Link
+              to="/register"
+              className="text-blue-600 font-semibold hover:underline"
+            >
+              Register
+            </Link>
+          </p>
 
         </div>
 
