@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import reportRoutes from "./routes/reportRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 import mongoose from "mongoose";
 
 dotenv.config();
@@ -18,7 +19,7 @@ app.use("/uploads", express.static("uploads"));
 
 import authRoutes from "./routes/authRoutes.js";
 app.use("/api/auth", authRoutes);
-
+app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/chat", chatRoutes);
 
