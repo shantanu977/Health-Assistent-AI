@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Footer from "../components/Footer";
 
 export default function ReportUpload() {
   const [file, setFile] = useState(null);
@@ -9,35 +10,33 @@ export default function ReportUpload() {
     setFile(e.target.files[0]);
   };
 
-const handleUpload = async () => {
-  if (!file) return alert("Please select a report first");
+  const handleUpload = async () => {
+    if (!file) return alert("Please select a report first");
 
-  const formData = new FormData();
-formData.append("report", file);
-  setLoading(true);
+    const formData = new FormData();
+    formData.append("report", file);
+    setLoading(true);
 
-const res = await fetch("http://localhost:5000/api/reports/upload", {
-  method: "POST",
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-  body: formData,
-});
+    const res = await fetch("http://localhost:5000/api/reports/upload", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: formData,
+    });
 
-  const data = await res.json();
-  setLoading(false);
-  setResult(data);
-};
+    const data = await res.json();
+    setLoading(false);
+    setResult(data);
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 flex flex-col items-center">
-      
       <h1 className="text-3xl font-bold mb-6 text-blue-400">
         Upload Medical Report
       </h1>
 
       <div className="bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-xl">
-        
         {/* File Input */}
         <input
           type="file"
@@ -57,21 +56,23 @@ const res = await fetch("http://localhost:5000/api/reports/upload", {
 
       {/* RESULT SECTION */}
       {result && (
-  <div className="mt-10 w-full max-w-4xl">
+        <div className="mt-10 w-full max-w-4xl">
+          <h2 className="text-2xl font-bold mb-3 text-green-400">
+            Extracted Text
+          </h2>
+          <div className="bg-gray-800 p-4 rounded-lg whitespace-pre-wrap max-h-80 overflow-y-auto">
+            {result.report?.extractedText || "No text found"}
+          </div>
 
-    <h2 className="text-2xl font-bold mb-3 text-green-400">Extracted Text</h2>
-    <div className="bg-gray-800 p-4 rounded-lg whitespace-pre-wrap max-h-80 overflow-y-auto">
-      {result.report?.extractedText || "No text found"}
-    </div>
-
-    <h2 className="text-2xl font-bold mt-6 mb-3 text-yellow-400">AI Analysis</h2>
-    <div className="bg-gray-800 p-4 rounded-lg whitespace-pre-wrap max-h-80 overflow-y-auto">
-      {result.report?.aiAnalysis}
-    </div>
-
-  </div>
-)}
-
+          <h2 className="text-2xl font-bold mt-6 mb-3 text-yellow-400">
+            AI Analysis
+          </h2>
+          <div className="bg-gray-800 p-4 rounded-lg whitespace-pre-wrap max-h-80 overflow-y-auto">
+            {result.report?.aiAnalysis}
+          </div>
+        </div>
+      )}
+      <Footer />
     </div>
   );
 }
