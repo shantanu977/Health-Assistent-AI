@@ -24,5 +24,34 @@ router.get("/reports", auth, async (req, res) => {
   res.json(reports);
 });
 
+// Clear Chat History
+router.delete("/chats/clear", auth, async (req, res) => {
+  try {
+    const conversation = await Conversation.findOne({ userId: req.userId });
+
+    if (!conversation) {
+      return res.json({ success: true, message: "No chat history found" });
+    }
+
+    conversation.messages = [];
+    await conversation.save();
+
+    res.json({ success: true, message: "Chat history cleared" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Clear ALL reports
+router.delete("/reports/clear", auth, async (req, res) => {
+  try {
+    await Report.deleteMany({ userId: req.userId });
+    res.json({ success: true, message: "All reports deleted" });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
 export default router;
 
