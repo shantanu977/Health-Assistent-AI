@@ -126,7 +126,10 @@ export default function Dashboard() {
             {reports.length === 0 && <p>No reports uploaded.</p>}
 
             {reports.map((rep) => (
-              <div key={rep._id} className="bg-white p-4 rounded shadow">
+              <div
+                key={rep._id}
+                className="bg-white p-4 rounded shadow relative"
+              >
                 <p>
                   <b>File:</b> {rep.originalName}
                 </p>
@@ -136,6 +139,46 @@ export default function Dashboard() {
                 <p>
                   <b>Extracted:</b> {rep.extractedText?.substring(0, 100)}...
                 </p>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const res = await fetch(
+                        `http://localhost:5000/api/dashboard/reports/download/${rep._id}`,
+                        {
+                          method: "GET",
+                          headers: {
+                            Authorization: `Bearer ${localStorage.getItem(
+                              "token"
+                            )}`,
+                          },
+                        }
+                      );
+
+                      if (!res.ok) {
+                        return alert("Download failed");
+                      }
+
+                      // Convert to Blob
+                      const blob = await res.blob();
+
+                      // Create download link
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = rep.originalName;
+                      document.body.appendChild(a);
+                      a.click();
+                      a.remove();
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      alert("Error downloading file");
+                    }
+                  }}
+                  className="mt-3 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                >
+                  Download PDF
+                </button>
               </div>
             ))}
           </div>

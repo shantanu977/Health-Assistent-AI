@@ -52,6 +52,24 @@ router.delete("/reports/clear", auth, async (req, res) => {
   }
 });
 
+// Download PDF report
+router.get("/reports/download/:id", auth, async (req, res) => {
+  try {
+    const report = await Report.findOne({
+      _id: req.params.id,
+      userId: req.userId
+    });
+
+    if (!report) {
+      return res.status(404).json({ error: "Report not found" });
+    }
+
+    res.download(report.filePath, report.originalName);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 export default router;
 
