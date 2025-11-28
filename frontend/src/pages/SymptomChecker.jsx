@@ -15,7 +15,7 @@ export default function SymptomChecker() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // ✅ FIXED
       },
       body: JSON.stringify({ symptoms }),
     });
@@ -74,4 +74,3 @@ export default function SymptomChecker() {
     </div>
   );
 }
-
