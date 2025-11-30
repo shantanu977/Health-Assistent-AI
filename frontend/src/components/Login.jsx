@@ -6,11 +6,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // If already logged in → redirect to home
+  // Redirect if already logged in
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/");
-    }
+    if (localStorage.getItem("token")) navigate("/");
   }, []);
 
   const login = async () => {
@@ -29,58 +27,60 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#0B1F36] px-4">
+      <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-8">
         
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+        <h2 className="text-3xl font-bold text-center text-teal-400 mb-6">
           Welcome Back
         </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
 
+          {/* Email */}
           <div>
-            <label className="text-gray-700 font-semibold">Email</label>
+            <label className="text-white font-semibold">Email</label>
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full px-4 py-3 bg-white/20 text-white border border-white/30 rounded-xl
+                         placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
               placeholder="Enter your email"
             />
           </div>
 
+          {/* Password */}
           <div>
-            <label className="text-gray-700 font-semibold">Password</label>
+            <label className="text-white font-semibold">Password</label>
             <input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full px-4 py-3 bg-white/20 text-white border border-white/30 rounded-xl
+                         placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
               placeholder="Enter your password"
             />
           </div>
 
+          {/* Login Button */}
           <button
             onClick={login}
-            className="w-full py-3 bg-blue-600 text-white rounded-lg 
-                       text-lg font-semibold hover:bg-blue-700 active:scale-95
-                       transition-all"
+            className="w-full py-3 bg-teal-500 text-white rounded-xl text-lg font-semibold
+                       hover:bg-teal-400 active:scale-95 transition-all shadow-md"
           >
             Login
           </button>
 
-          <p className="text-center text-gray-600 mt-3">
+          {/* Register Link */}
+          <p className="text-center text-gray-300 mt-3">
             Don’t have an account?{" "}
             <Link
               to="/register"
-              className="text-blue-600 font-semibold hover:underline"
+              className="text-teal-400 font-semibold hover:underline"
             >
               Register
             </Link>
           </p>
 
         </div>
-
       </div>
     </div>
   );

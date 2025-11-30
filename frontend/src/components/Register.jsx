@@ -30,67 +30,71 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
+    <div className="min-h-screen flex items-center justify-center bg-[#0B1F36] px-4">
+      <div className="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg rounded-2xl p-8">
         
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+        <h2 className="text-3xl font-bold text-center text-teal-400 mb-6">
           Create Account
         </h2>
 
         {error && (
-          <p className="text-red-600 bg-red-100 p-2 rounded-md text-center mb-4">
+          <p className="text-red-400 bg-red-600/20 p-2 rounded-md text-center mb-4">
             {error}
           </p>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           
+          {/* Full Name */}
           <div>
-            <label className="text-gray-700 font-semibold">Full Name</label>
+            <label className="text-white font-semibold">Full Name</label>
             <input
               onChange={(e) => setName(e.target.value)}
-              className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full px-4 py-3 bg-white/20 text-white border border-white/30 rounded-xl
+                         placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
               placeholder="Enter your name"
             />
           </div>
 
+          {/* Email */}
           <div>
-            <label className="text-gray-700 font-semibold">Email</label>
+            <label className="text-white font-semibold">Email</label>
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full px-4 py-3 bg-white/20 text-white border border-white/30 rounded-xl
+                         placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
               placeholder="Enter your email"
             />
           </div>
 
+          {/* Password */}
           <div>
-            <label className="text-gray-700 font-semibold">Password</label>
+            <label className="text-white font-semibold">Password</label>
             <input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full px-4 py-3 bg-white/20 text-white border border-white/30 rounded-xl
+                         placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
               placeholder="Create a password"
             />
           </div>
 
+          {/* Register Button */}
           <button
             onClick={register}
-            className="w-full py-3 bg-blue-600 text-white rounded-lg 
-                       text-lg font-semibold hover:bg-blue-700 active:scale-95
-                       transition-all"
+            className="w-full py-3 bg-teal-500 text-white rounded-xl text-lg font-semibold
+                       hover:bg-teal-400 active:scale-95 transition-all shadow-md"
           >
             Register
           </button>
 
-          <p className="text-center text-sm text-gray-600">
+          {/* Login Link */}
+          <p className="text-center text-gray-300 mt-3">
             Already have an account?{" "}
             <span
               onClick={() => navigate("/login")}
-              className="text-blue-600 font-semibold cursor-pointer hover:underline"
+              className="text-teal-400 font-semibold cursor-pointer hover:underline"
             >
               Login
             </span>

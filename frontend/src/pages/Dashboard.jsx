@@ -34,24 +34,18 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-[#0B1F36] text-white">
       <Sidebar />
 
-      <div className="w-full p-6 space-y-10 bg-gray-100">
+      <div className="w-full p-6 space-y-10">
         {/* Profile Section */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">Profile</h2>
+          <h2 className="text-2xl font-bold mb-4 text-teal-400">Profile</h2>
           {profile ? (
-            <div className="bg-white p-6 rounded shadow">
-              <p>
-                <b>Name:</b> {profile.name}
-              </p>
-              <p>
-                <b>Email:</b> {profile.email}
-              </p>
-              <p>
-                <b>Joined:</b> {new Date(profile.createdAt).toDateString()}
-              </p>
+            <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-md border border-white/20 space-y-2">
+              <p><b>Name:</b> {profile.name}</p>
+              <p><b>Email:</b> {profile.email}</p>
+              <p><b>Joined:</b> {new Date(profile.createdAt).toDateString()}</p>
             </div>
           ) : (
             <p>Loading profile...</p>
@@ -61,35 +55,30 @@ export default function Dashboard() {
         {/* Chat History */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">Chat History</h2>
-
+            <h2 className="text-2xl font-bold text-teal-400">Chat History</h2>
             <button
               onClick={async () => {
                 if (!confirm("Clear all chat history?")) return;
-
-                await axios.delete(
-                  "http://localhost:5000/api/dashboard/chats/clear",
-                  {
-                    headers: { Authorization: `Bearer ${token}` },
-                  }
-                );
-
-                setChats([]); // instantly update UI
+                await axios.delete("http://localhost:5000/api/dashboard/chats/clear", {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                setChats([]);
               }}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
             >
               Clear Chats
             </button>
           </div>
 
-          <div className="bg-white p-4 rounded shadow space-y-3 max-h-96 overflow-y-auto">
+          <div className="bg-white/10 backdrop-blur-xl p-4 rounded-2xl shadow-inner max-h-96 overflow-y-auto space-y-3 border border-white/20">
             {chats.length === 0 && <p>No chats available.</p>}
-
             {chats.map((msg, i) => (
               <div
                 key={i}
-                className={`p-3 rounded ${
-                  msg.role === "user" ? "bg-blue-200" : "bg-gray-200"
+                className={`p-3 rounded-xl max-w-[80%] ${
+                  msg.role === "user"
+                    ? "bg-teal-500 text-white ml-auto rounded-br-none"
+                    : "bg-white/20 text-white rounded-bl-none"
                 }`}
               >
                 <b>{msg.role}:</b> {msg.content}
@@ -101,22 +90,16 @@ export default function Dashboard() {
         {/* Report History */}
         <section>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">Medical Report History</h2>
-
+            <h2 className="text-2xl font-bold text-teal-400">Medical Report History</h2>
             <button
               onClick={async () => {
                 if (!confirm("Delete ALL medical reports?")) return;
-
-                await axios.delete(
-                  "http://localhost:5000/api/dashboard/reports/clear",
-                  {
-                    headers: { Authorization: `Bearer ${token}` },
-                  }
-                );
-
-                setReports([]); // instantly update UI
+                await axios.delete("http://localhost:5000/api/dashboard/reports/clear", {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                setReports([]);
               }}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
             >
               Clear Reports
             </button>
@@ -128,17 +111,11 @@ export default function Dashboard() {
             {reports.map((rep) => (
               <div
                 key={rep._id}
-                className="bg-white p-4 rounded shadow relative"
+                className="bg-white/10 backdrop-blur-xl p-4 rounded-2xl shadow-md border border-white/20 space-y-2"
               >
-                <p>
-                  <b>File:</b> {rep.originalName}
-                </p>
-                <p>
-                  <b>Uploaded:</b> {new Date(rep.createdAt).toLocaleString()}
-                </p>
-                <p>
-                  <b>Extracted:</b> {rep.extractedText?.substring(0, 100)}...
-                </p>
+                <p><b>File:</b> {rep.originalName}</p>
+                <p><b>Uploaded:</b> {new Date(rep.createdAt).toLocaleString()}</p>
+                <p><b>Extracted:</b> {rep.extractedText?.substring(0, 100)}...</p>
 
                 <button
                   onClick={async () => {
@@ -148,21 +125,14 @@ export default function Dashboard() {
                         {
                           method: "GET",
                           headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                              "token"
-                            )}`,
+                            Authorization: `Bearer ${localStorage.getItem("token")}`,
                           },
                         }
                       );
 
-                      if (!res.ok) {
-                        return alert("Download failed");
-                      }
+                      if (!res.ok) return alert("Download failed");
 
-                      // Convert to Blob
                       const blob = await res.blob();
-
-                      // Create download link
                       const url = window.URL.createObjectURL(blob);
                       const a = document.createElement("a");
                       a.href = url;
@@ -171,11 +141,11 @@ export default function Dashboard() {
                       a.click();
                       a.remove();
                       window.URL.revokeObjectURL(url);
-                    } catch (err) {
+                    } catch {
                       alert("Error downloading file");
                     }
                   }}
-                  className="mt-3 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                  className="mt-2 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
                 >
                   Download PDF
                 </button>
@@ -184,7 +154,6 @@ export default function Dashboard() {
           </div>
         </section>
       </div>
-      <Footer />
     </div>
   );
 }

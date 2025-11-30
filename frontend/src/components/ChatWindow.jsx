@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar"; // <-- include Navbar
-import Footer from "./Footer";
+import Navbar from "../components/Navbar";
 
 const ChatWindow = () => {
   const [messages, setMessages] = useState([]);
@@ -51,24 +50,30 @@ const ChatWindow = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#0B1F36] flex flex-col">
       
+      {/* CHAT CONTAINER */}
+      <div className="flex justify-center mt-10 px-4 flex-1">
+        <div className="w-full max-w-2xl bg-white/10 backdrop-blur-xl rounded-2xl p-5 shadow-xl border border-white/10">
 
-      <div className="flex justify-center items-center p-3">
-        <div className="w-full max-w-lg bg-white shadow-lg rounded-2xl p-5 mt-4">
+          {/* Chat Header */}
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-semibold text-white">AI Health Assistant</h2>
+            <p className="text-gray-300 text-sm">
+              Ask medical questions, symptoms, or reports.
+            </p>
+          </div>
 
-          <h2 className="text-xl font-semibold text-center mb-4 text-blue-600">
-            AI Health Assistant
-          </h2>
+          {/* Message Area */}
+          <div className="h-[500px] overflow-y-auto bg-white/5 p-4 rounded-xl space-y-4 border border-white/10">
 
-          <div className="h-[450px] overflow-y-auto bg-gray-50 p-4 rounded-xl space-y-3">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`p-3 rounded-xl max-w-[80%] text-sm ${
+                className={`px-4 py-3 rounded-2xl max-w-[80%] text-sm shadow-md ${
                   msg.role === "user"
-                    ? "bg-blue-500 text-white ml-auto"
-                    : "bg-gray-200 text-gray-800"
+                    ? "bg-teal-500 text-white ml-auto rounded-br-none"
+                    : "bg-white/20 text-white backdrop-blur-md border border-white/20 rounded-bl-none"
                 }`}
               >
                 {msg.content}
@@ -76,7 +81,7 @@ const ChatWindow = () => {
             ))}
 
             {loading && (
-              <div className="p-3 max-w-[60%] bg-gray-300 text-gray-700 rounded-xl">
+              <div className="px-4 py-3 bg-white/20 text-white rounded-2xl w-fit border border-white/20">
                 Typing…
               </div>
             )}
@@ -84,26 +89,29 @@ const ChatWindow = () => {
             <div ref={chatEndRef} />
           </div>
 
-          <div className="flex gap-2 mt-4">
+          {/* Input Box */}
+          <div className="flex gap-3 mt-5">
             <input
               type="text"
               value={input}
-              placeholder="Ask about your health..."
+              placeholder="Ask something about your health..."
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-              className="flex-1 p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="flex-1 p-3 rounded-xl bg-white/10 text-white border border-white/20
+                         placeholder-gray-300 outline-none focus:ring-2 focus:ring-teal-400"
             />
 
             <button
               onClick={sendMessage}
-              className="px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+              className="px-6 py-3 rounded-xl bg-teal-500 text-white font-semibold
+                         hover:bg-teal-400 transition shadow-lg"
             >
               Send
             </button>
           </div>
+
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
