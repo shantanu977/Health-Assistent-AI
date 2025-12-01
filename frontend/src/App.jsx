@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import SymptomChecker from "./pages/SymptomChecker";
+import MedicineReminder from "./pages/MedicineReminder";
+import DietPlanner from "./pages/DietPlanner";
 
 function App() {
   return (
@@ -54,6 +56,23 @@ function App() {
             element={
               <ProtectedRoute>
                 <ReportUpload />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/diet-planner"
+            element={
+              <ProtectedRoute>
+                <DietPlanner />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/medicine-reminder"
+            element={
+              <ProtectedRoute>
+                <MedicineReminder />
               </ProtectedRoute>
             }
           />
