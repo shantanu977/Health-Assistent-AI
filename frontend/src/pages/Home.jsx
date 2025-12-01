@@ -85,7 +85,7 @@ export default function Home() {
         <Link to="/dashboard">
           <div className="p-5 bg-[#122A45] hover:bg-[#183655] transition rounded-2xl shadow-md border border-blue-900/40 cursor-pointer">
             <h3 className="text-lg font-semibold text-blue-300">📊 Wellness Dashboard</h3>
-            <p className="text-gray-300 mt-2">Monitor sleep, mood & progress.</p>
+            <p className="text-gray-300 mt-2">Monitor & maintain dashboard.</p>
           </div>
         </Link>
       </div>
