@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import symptomRoutes from "./routes/symptoms.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import waterRoutes from "./routes/waterRoutes.js";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/api/reports", reportRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/symptoms", symptomRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/water", waterRoutes);
 
 // MongoDB
 mongoose

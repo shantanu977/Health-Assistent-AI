@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import SymptomChecker from "./pages/SymptomChecker";
 import MedicineReminder from "./pages/MedicineReminder";
 import DietPlanner from "./pages/DietPlanner";
+import WaterTracker from "./pages/WaterTracker";
 
 function App() {
   return (
@@ -64,6 +65,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <DietPlanner />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/water-tracker"
+            element={
+              <ProtectedRoute>
+                <WaterTracker />
               </ProtectedRoute>
             }
           />
